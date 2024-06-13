@@ -12,11 +12,18 @@ type Category = (typeof PRODUCT_CATEGORIES)[number];
 interface NavItemProps {
   category: Category;
   handleOpen: () => void;
+  close: () => void;
   isOpen: boolean;
   isAnyOpen: boolean;
 }
 
-const NavItem = ({ isAnyOpen, category, handleOpen, isOpen }: NavItemProps) => {
+const NavItem = ({
+  isAnyOpen,
+  category,
+  handleOpen,
+  isOpen,
+  close,
+}: NavItemProps) => {
   return (
     <div className="flex">
       <div className="relative flex items-center">
@@ -36,6 +43,7 @@ const NavItem = ({ isAnyOpen, category, handleOpen, isOpen }: NavItemProps) => {
 
       {isOpen ? (
         <div
+          onClick={close}
           className={cn(
             "absolute inset-x-0 top-full text-sm text-muted-foreground",
             {
@@ -55,26 +63,26 @@ const NavItem = ({ isAnyOpen, category, handleOpen, isOpen }: NavItemProps) => {
                   {category.featured.map((item) => (
                     <div
                       key={item.name}
-                      className="group relativetext-base sm:text-sm"
+                      className="group relative text-base sm:text-sm"
+                      onClick={close}
                     >
-                      <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
-                        <Image
-                          src={item.imageSrc}
-                          alt="product category"
-                          fill
-                          className="object-cover object-center"
-                        />
-                      </div>
+                      <Link href={item.href}>
+                        <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
+                          <Image
+                            src={item.imageSrc}
+                            alt="product category"
+                            fill
+                            className="object-cover object-center"
+                          />
+                        </div>
 
-                      <Link
-                        href={item.href}
-                        className="mt-6 block font-medium text-gray-900"
-                      >
-                        {item.name}
+                        <h3 className="mt-6 block font-medium text-gray-900">
+                          {item.name}
+                        </h3>
+                        <p className="'mt-1" aria-hidden="true">
+                          Shop now
+                        </p>
                       </Link>
-                      <p className="'mt-1" aria-hidden="true">
-                        Shop now
-                      </p>
                     </div>
                   ))}
                 </div>

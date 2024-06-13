@@ -32,6 +32,11 @@ export default buildConfig({
   rateLimit: {
     max: 2000,
   },
+  upload: {
+    limits: {
+      fileSize: 5000000,
+    },
+  },
   editor: slateEditor({}),
   db: mongooseAdapter({
     url: process.env.MONGODB_URL!,

@@ -1,6 +1,7 @@
 import { User } from "../payload-types";
 import { BeforeChangeHook } from "payload/dist/collections/config/types";
 import { Access, CollectionConfig } from "payload/types";
+import { buildConfig } from "payload/config";
 
 const addUser: BeforeChangeHook = ({ req, data }) => {
   const user = req.user as User | null;
@@ -67,7 +68,6 @@ export const ProductFiles: CollectionConfig = {
   hooks: {
     beforeChange: [addUser],
   },
-
   access: {
     read: yourOwnAndPurchased,
     update: ({ req }) => req.user.role === "admin",
@@ -76,7 +76,13 @@ export const ProductFiles: CollectionConfig = {
   upload: {
     staticURL: "/product_files",
     staticDir: "product_files",
-    mimeTypes: ["image/*", "font/*", "application/postscript"],
+    mimeTypes: [
+      "image/*",
+      "font/*",
+      "application/postscript",
+      "application/zip",
+      "application/pdf",
+    ],
   },
   fields: [
     {
