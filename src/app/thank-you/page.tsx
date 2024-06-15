@@ -72,7 +72,7 @@ const ThankYouPage = async ({ searchParams }: ThankYouPageProps) => {
             <h1 className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
               Thanks for ordering
             </h1>
-            {order._isPaid || true ? (
+            {order._isPaid ? (
               <p className="mt-2 text-base text-muted-foreground">
                 Your order was processed and your assets are available to
                 download below. We&apos;ve sent your receipt and order details
@@ -128,7 +128,7 @@ const ThankYouPage = async ({ searchParams }: ThankYouPageProps) => {
                           <p className="my-1">Catgeory: {label}</p>
                         </div>
 
-                        {order._isPaid || true ? (
+                        {order._isPaid ? (
                           <a
                             href={downloadUrl}
                             download={product.name}

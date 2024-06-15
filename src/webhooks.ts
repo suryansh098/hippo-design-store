@@ -13,6 +13,8 @@ export const stripeWebhookHandler = async (
   req: express.Request,
   res: express.Response
 ) => {
+  console.log("stripe webhook started...");
+
   const webhookRequest = req as any as WebhookRequest;
   const body = webhookRequest.rawBody;
   const signature = req.headers["stripe-signature"] || "";
@@ -33,6 +35,9 @@ export const stripeWebhookHandler = async (
   }
 
   const session = event.data.object as Stripe.Checkout.Session;
+
+  console.log("**********************************************", event.type);
+  console.log(session);
 
   if (!session?.metadata?.userId || !session?.metadata?.orderId) {
     return res.status(400).send(`Webhook Error: No user present in metadata`);
@@ -70,13 +75,9 @@ export const stripeWebhookHandler = async (
 
     await payload.update({
       collection: "orders",
+      id: session.metadata.orderId,
       data: {
         _isPaid: true,
-      },
-      where: {
-        id: {
-          equals: session.metadata.orderId,
-        },
       },
     });
 
