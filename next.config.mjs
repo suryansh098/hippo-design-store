@@ -3,12 +3,12 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "localhost",
         protocol: "http",
+        hostname: "localhost",
       },
       {
         protocol: "https",
-        hostname: "hippo-design-store-production.up.railway.app",
+        hostname: "hippo-design-store.onrender.com",
       },
     ],
   },
